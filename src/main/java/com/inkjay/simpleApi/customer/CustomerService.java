@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CustomerService {
@@ -23,7 +24,7 @@ public class CustomerService {
         return (List<Customer>) customerRepository.findAll();
     }
     //get one customer by id
-    public Optional<Customer> getCustomerById(Long id){
+    public Optional<Customer> getCustomerById(UUID id){
     boolean exists = customerRepository.existsById(id);
 
         if (!exists) {
@@ -43,7 +44,7 @@ public class CustomerService {
     }
 
     //delete customer by id
-    public void deleteCustomer(Long id) {
+    public void deleteCustomer(UUID id) {
         boolean exists = customerRepository.existsById(id);
 
         if (!exists) {

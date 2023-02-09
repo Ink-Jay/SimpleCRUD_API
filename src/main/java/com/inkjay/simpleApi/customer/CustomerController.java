@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "api/v1/customer")
@@ -24,7 +25,7 @@ public class CustomerController {
     }
 
     @GetMapping(path = "{id}")
-    public ResponseEntity<Optional<Customer>> getSingleMovie(@PathVariable Long id){
+    public ResponseEntity<Optional<Customer>> getSingleMovie(@PathVariable UUID id){
         return new ResponseEntity<Optional<Customer>>(customerService.getCustomerById(id), HttpStatus.OK);
     }
 
@@ -34,7 +35,7 @@ public class CustomerController {
     }
 
     @DeleteMapping(path = "{id}")
-    public void deleteStudent(@PathVariable("id") Long id ){
+    public void deleteStudent(@PathVariable("id") UUID id ){
         customerService.deleteCustomer(id);
     }
     @PutMapping(path = "{id}")
