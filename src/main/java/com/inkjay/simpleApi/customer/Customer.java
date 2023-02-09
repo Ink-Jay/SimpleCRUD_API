@@ -2,13 +2,16 @@ package com.inkjay.simpleApi.customer;
 
 import jakarta.persistence.*;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "customer")
 public class Customer {
         @Id
-        @SequenceGenerator(name = "customer_sequence", sequenceName = "customer_sequence", allocationSize = 1)
-        @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_sequence")
-        private Long id;
+//        @SequenceGenerator(name = "customer_sequence", sequenceName = "customer_sequence", allocationSize = 50)
+//        @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_sequence")
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        private UUID id ;
 
         private String firstName;
         private String lastName;
@@ -19,7 +22,7 @@ public class Customer {
         public Customer() {
         }
 
-        public Customer(Long id, String firstName, String lastName, String email, String phoneNumber) {
+        public Customer(UUID id, String firstName, String lastName, String email, String phoneNumber) {
                 this.id = id;
                 this.firstName = firstName;
                 this.lastName = lastName;
@@ -34,11 +37,11 @@ public class Customer {
                 this.phoneNumber = phoneNumber;
         }
 
-        public Long getId() {
+        public UUID getId() {
                 return id;
         }
 
-        public void setId(Long id) {
+        public void setId(UUID id) {
                 this.id = id;
         }
 

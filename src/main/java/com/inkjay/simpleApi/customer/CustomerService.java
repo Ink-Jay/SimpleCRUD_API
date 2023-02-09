@@ -3,8 +3,10 @@ package com.inkjay.simpleApi.customer;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import org.springframework.http.ResponseEntity;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -16,9 +18,21 @@ public class CustomerService {
     public CustomerService(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
+    //get all customers
     public List<Customer> getCustomers(){
         return (List<Customer>) customerRepository.findAll();
     }
+    //get one customer by id
+    public Optional<Customer> getCustomerById(Long id){
+    boolean exists = customerRepository.existsById(id);
+
+        if (!exists) {
+        throw new IllegalStateException("Customer with id " + id + " does not exist");
+    }
+        return customerRepository.findById(id);
+    }
+
+    // add new customer
     public void addNewCustomer(Customer customer) {
         Optional<Customer> customerOptional = customerRepository.findCustomerByEmail(customer.getEmail());
 
@@ -27,6 +41,8 @@ public class CustomerService {
         }
         customerRepository.save(customer);
     }
+
+    //delete customer by id
     public void deleteCustomer(Long id) {
         boolean exists = customerRepository.existsById(id);
 
@@ -36,6 +52,8 @@ public class CustomerService {
 
         customerRepository.deleteById(id);
     }
+
+    //update or change customer details
     @Transactional
     public void updateCustomer(Long id, String firstName, String lastName, String email, String phoneNumber) {
         Customer customer = customerRepository.findById(id)

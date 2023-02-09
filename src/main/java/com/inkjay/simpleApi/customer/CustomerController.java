@@ -1,9 +1,12 @@
 package com.inkjay.simpleApi.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/v1/customer")
@@ -19,6 +22,12 @@ public class CustomerController {
     public List<Customer> getStudents(){
         return customerService.getCustomers();
     }
+
+    @GetMapping(path = "{id}")
+    public ResponseEntity<Optional<Customer>> getSingleMovie(@PathVariable Long id){
+        return new ResponseEntity<Optional<Customer>>(customerService.getCustomerById(id), HttpStatus.OK);
+    }
+
     @PostMapping
     public void registerNewStudent(@RequestBody Customer customer){
         customerService.addNewCustomer(customer);
